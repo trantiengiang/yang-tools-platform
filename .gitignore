@@ -1,22 +1,24 @@
-# Dependencies
+# ================================
+# 🔧 Yang Tools Platform - .gitignore
+# ================================
+
+# === Dependencies ===
 node_modules/
 .pnp
 .pnp.js
 jspm_packages/
 
-# Build outputs
+# === Build outputs ===
 dist/
 build/
 *.tsbuildinfo
 
-# Environment variables
+# === Environment files ===
 .env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+.env.*
+!.env.example   # ✅ Giữ file ví dụ cho dev khác
 
-# Logs
+# === Logs ===
 logs
 *.log
 npm-debug.log*
@@ -25,44 +27,61 @@ yarn-error.log*
 lerna-debug.log*
 pnpm-debug.log*
 
-# Testing
+# === Testing ===
 coverage/
 *.lcov
-.nyc_output
+.nyc_output/
 
-# Cache directories
+# === Cache directories ===
 .cache/
 .parcel-cache/
 .eslintcache
 .stylelintcache
 .node_repl_history
 
-# IDE
+# === IDE / Editor ===
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
+*.iml
 
-# OS
+# === OS ===
 .DS_Store
 Thumbs.db
+Desktop.ini
 
-# Optional npm cache
-.npm
+# === Optional npm cache ===
+.npm/
 
-# Yarn
+# === Yarn ===
 .yarn-integrity
-.yarn/cache
-.yarn/unplugged
+.yarn/cache/
+.yarn/unplugged/
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
 
-# Vite
+# === Vite / React ===
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+vite.config.*.timestamp-*
+*.local
+*.lock-wscript
 
-# Temporary files
+# === Temporary files ===
 *.tmp
 *.temp
+tmp/
+temp/
+
+# === Misc ===
+# Local backups or drafts
+*.bak
+*.old
+*.orig
+
+# === Deployment (Netlify/Vercel) ===
+.vercel/
+.netlify/
