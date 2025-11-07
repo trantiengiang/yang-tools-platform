@@ -1,0 +1,146 @@
+.why-choose-us {
+  width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px var(--shadow);
+  background: var(--bg-secondary);
+  transition: background-color 0.3s ease;
+}
+
+.why-choose-us-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 24px 32px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: white;
+}
+
+.header-icon {
+  font-size: 1.5rem;
+}
+
+.header-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+.why-choose-us-content {
+  background: var(--bg-tertiary);
+  padding: 32px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 24px;
+  transition: background-color 0.3s ease;
+}
+
+.feature-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 24px;
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  border: 1px solid var(--border-color);
+}
+
+.feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px var(--shadow);
+}
+
+.feature-icon {
+  font-size: 3rem;
+  margin-bottom: 16px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.feature-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 8px 0;
+  transition: color 0.3s ease;
+}
+
+.feature-description {
+  font-size: 0.95rem;
+  color: var(--text-tertiary);
+  margin: 0;
+  line-height: 1.5;
+  transition: color 0.3s ease;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .why-choose-us-header {
+    padding: 20px 24px;
+  }
+
+  .header-title {
+    font-size: 1.25rem;
+  }
+
+  .why-choose-us-content {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    padding: 24px 16px;
+  }
+
+  .feature-card {
+    padding: 20px 16px;
+  }
+
+  .feature-icon {
+    font-size: 2.5rem;
+    margin-bottom: 12px;
+  }
+
+  .feature-title {
+    font-size: 1.1rem;
+  }
+
+  .feature-description {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .why-choose-us-header {
+    padding: 16px 20px;
+    flex-direction: column;
+    text-align: center;
+    gap: 8px;
+  }
+
+  .header-title {
+    font-size: 1.1rem;
+  }
+
+  .why-choose-us-content {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 20px 12px;
+  }
+
+  .feature-card {
+    padding: 16px;
+  }
+
+  .feature-icon {
+    font-size: 2rem;
+  }
+
+  .feature-title {
+    font-size: 1rem;
+  }
+
+  .feature-description {
+    font-size: 0.8rem;
+  }
+}
+
