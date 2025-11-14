@@ -1,4 +1,5 @@
 import Home from './pages/Home'
+import CategoryPage from './pages/CategoryPage'
 import UtilityPage from './pages/UtilityPage'
 
 /**
@@ -9,6 +10,10 @@ export const routes = [
   {
     path: '/',
     element: Home
+  },
+  {
+    path: '/category/:categoryId',
+    element: CategoryPage
   },
   {
     path: '/utility/:id',

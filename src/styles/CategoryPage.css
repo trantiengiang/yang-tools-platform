@@ -1,4 +1,4 @@
-.utility-page {
+.category-page {
   min-height: 100vh;
   background: var(--bg-primary);
   position: relative;
@@ -31,8 +31,8 @@
   box-shadow: 0 4px 12px var(--shadow);
 }
 
-/* Utility Header */
-.utility-header {
+/* Category Header */
+.category-header {
   background: var(--bg-secondary);
   border-bottom: 1px solid var(--border-color);
   padding: 24px 32px;
@@ -63,13 +63,13 @@
   transform: translateX(-4px);
 }
 
-.utility-header-content {
+.category-header-content {
   display: flex;
   align-items: center;
   gap: 20px;
 }
 
-.utility-header-icon {
+.category-header-icon {
   font-size: 3rem;
   display: flex;
   align-items: center;
@@ -81,7 +81,7 @@
   box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
 }
 
-.utility-title {
+.category-title {
   font-size: 2.5rem;
   font-weight: 700;
   color: var(--text-primary);
@@ -90,31 +90,98 @@
   transition: color 0.3s ease;
 }
 
-.utility-description {
+.category-subtitle {
   font-size: 1rem;
   color: var(--text-tertiary);
   margin: 0;
   transition: color 0.3s ease;
 }
 
-/* Utility Content */
-.utility-content {
+/* Category Content */
+.category-content {
   max-width: 1200px;
   margin: 0 auto;
   padding: 40px 32px;
 }
 
-/* Utility Container Adjustments */
-.utility-content .utility-container {
-  background: var(--bg-secondary);
-  border-radius: 16px;
-  padding: 32px;
-  box-shadow: 0 1px 3px var(--shadow);
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+/* Utilities Grid */
+.utilities-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
 }
 
-.utility-content .utility-container h3 {
-  display: none;
+.utility-card {
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  border-radius: 16px;
+  padding: 24px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 2px 8px var(--shadow);
+}
+
+.utility-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.utility-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px var(--shadow);
+  border-color: #667eea;
+}
+
+.utility-card:hover::before {
+  transform: scaleX(1);
+}
+
+.utility-card-icon {
+  font-size: 2.5rem;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.utility-card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 8px 0;
+  transition: color 0.3s ease;
+}
+
+.utility-card-description {
+  font-size: 0.9rem;
+  color: var(--text-tertiary);
+  margin: 0 0 16px 0;
+  line-height: 1.5;
+  transition: color 0.3s ease;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.utility-card-arrow {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  color: var(--text-tertiary);
+  transition: all 0.3s ease;
+}
+
+.utility-card:hover .utility-card-arrow {
+  color: #667eea;
+  transform: translateX(4px);
 }
 
 /* Responsive Design */
@@ -127,37 +194,42 @@
     font-size: 1.2rem;
   }
 
-  .utility-header {
+  .category-header {
     padding: 20px;
   }
 
-  .utility-header-content {
+  .category-header-content {
     flex-direction: column;
     align-items: flex-start;
     gap: 16px;
   }
 
-  .utility-header-icon {
+  .category-header-icon {
     width: 64px;
     height: 64px;
     font-size: 2.5rem;
   }
 
-  .utility-title {
+  .category-title {
     font-size: 2rem;
   }
 
-  .utility-content {
+  .category-content {
     padding: 32px 20px;
   }
 
-  .utility-content .utility-container {
-    padding: 24px;
+  .utilities-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .utility-card {
+    padding: 20px;
   }
 }
 
 @media (max-width: 480px) {
-  .utility-header {
+  .category-header {
     padding: 16px;
   }
 
@@ -167,26 +239,43 @@
     margin-bottom: 16px;
   }
 
-  .utility-header-icon {
+  .category-header-icon {
     width: 56px;
     height: 56px;
     font-size: 2rem;
   }
 
-  .utility-title {
+  .category-title {
     font-size: 1.75rem;
   }
 
-  .utility-description {
+  .category-subtitle {
     font-size: 0.9rem;
   }
 
-  .utility-content {
+  .category-content {
     padding: 24px 16px;
   }
 
-  .utility-content .utility-container {
+  .utilities-grid {
+    gap: 16px;
+  }
+
+  .utility-card {
     padding: 16px;
-    border-radius: 12px;
+  }
+
+  .utility-card-icon {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+
+  .utility-card-title {
+    font-size: 1.1rem;
+  }
+
+  .utility-card-description {
+    font-size: 0.85rem;
   }
 }
+

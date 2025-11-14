@@ -40,13 +40,11 @@ body {
   color: var(--text-primary);
   margin: 0;
   padding: 0;
-  overflow: hidden;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 #root {
-  height: 100vh;
-  overflow: hidden;
+  min-height: 100vh;
 }
 
 code {

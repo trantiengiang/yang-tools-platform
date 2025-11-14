@@ -1,38 +1,45 @@
 .why-choose-us {
   width: 100%;
-  border-radius: 16px;
+  border-radius: 14px;
   overflow: hidden;
-  box-shadow: 0 4px 12px var(--shadow);
-  background: var(--bg-secondary);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(102, 126, 234, 0.2);
   transition: background-color 0.3s ease;
 }
 
+[data-theme="dark"] .why-choose-us {
+  background: rgba(31, 41, 55, 0.7);
+  border-color: rgba(102, 126, 234, 0.3);
+}
+
 .why-choose-us-header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 24px 32px;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%);
+  padding: 16px 24px;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   color: white;
 }
 
 .header-icon {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
 }
 
 .header-title {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: 700;
   margin: 0;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.3px;
 }
 
 .why-choose-us-content {
-  background: var(--bg-tertiary);
-  padding: 32px;
+  background: transparent;
+  padding: 20px 24px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
   transition: background-color 0.3s ease;
 }
 
@@ -41,106 +48,134 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding: 24px;
-  background: var(--bg-secondary);
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
   border-radius: 12px;
   transition: all 0.3s ease;
-  border: 1px solid var(--border-color);
+  border: 1px solid rgba(102, 126, 234, 0.15);
+}
+
+[data-theme="dark"] .feature-card {
+  background: rgba(31, 41, 55, 0.5);
+  border-color: rgba(102, 126, 234, 0.2);
 }
 
 .feature-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 16px var(--shadow);
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.2);
+  border-color: rgba(102, 126, 234, 0.3);
 }
 
 .feature-icon {
-  font-size: 3rem;
-  margin-bottom: 16px;
+  font-size: 2rem;
+  margin-bottom: 10px;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  transition: transform 0.3s ease;
+}
+
+.feature-card:hover .feature-icon {
+  transform: scale(1.1);
 }
 
 .feature-title {
-  font-size: 1.25rem;
+  font-size: 1rem;
   font-weight: 700;
   color: var(--text-primary);
-  margin: 0 0 8px 0;
+  margin: 0 0 6px 0;
   transition: color 0.3s ease;
 }
 
 .feature-description {
-  font-size: 0.95rem;
+  font-size: 0.8rem;
   color: var(--text-tertiary);
   margin: 0;
-  line-height: 1.5;
+  line-height: 1.4;
   transition: color 0.3s ease;
 }
 
 /* Responsive */
+@media (max-width: 1024px) {
+  .why-choose-us-content {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+}
+
 @media (max-width: 768px) {
   .why-choose-us-header {
-    padding: 20px 24px;
+    padding: 14px 20px;
+  }
+
+  .header-icon {
+    font-size: 1.1rem;
   }
 
   .header-title {
-    font-size: 1.25rem;
+    font-size: 1.1rem;
   }
 
   .why-choose-us-content {
     grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-    padding: 24px 16px;
+    gap: 12px;
+    padding: 16px 20px;
   }
 
   .feature-card {
-    padding: 20px 16px;
+    padding: 14px;
   }
 
   .feature-icon {
-    font-size: 2.5rem;
-    margin-bottom: 12px;
+    font-size: 1.75rem;
+    margin-bottom: 8px;
   }
 
   .feature-title {
-    font-size: 1.1rem;
+    font-size: 0.95rem;
   }
 
   .feature-description {
-    font-size: 0.85rem;
+    font-size: 0.75rem;
   }
 }
 
 @media (max-width: 480px) {
   .why-choose-us-header {
-    padding: 16px 20px;
-    flex-direction: column;
-    text-align: center;
+    padding: 12px 16px;
+    flex-direction: row;
     gap: 8px;
   }
 
-  .header-title {
-    font-size: 1.1rem;
-  }
-
-  .why-choose-us-content {
-    grid-template-columns: 1fr;
-    gap: 12px;
-    padding: 20px 12px;
-  }
-
-  .feature-card {
-    padding: 16px;
-  }
-
-  .feature-icon {
-    font-size: 2rem;
-  }
-
-  .feature-title {
+  .header-icon {
     font-size: 1rem;
   }
 
+  .header-title {
+    font-size: 1rem;
+  }
+
+  .why-choose-us-content {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    padding: 14px 16px;
+  }
+
+  .feature-card {
+    padding: 12px;
+  }
+
+  .feature-icon {
+    font-size: 1.5rem;
+    margin-bottom: 6px;
+  }
+
+  .feature-title {
+    font-size: 0.85rem;
+    margin-bottom: 4px;
+  }
+
   .feature-description {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
+    line-height: 1.3;
   }
 }
-

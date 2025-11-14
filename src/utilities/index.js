@@ -514,3 +514,8 @@ export const utilitiesList = Object.values(utilities).map(u => u.config)
 export const getUtility = (id) => {
   return utilities[id] || null
 }
+
+// Export function để lấy category ID từ utility ID
+export const getCategoryId = (utilityId) => {
+  return utilityCategories[utilityId] || null
+}
