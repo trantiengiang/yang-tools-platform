@@ -41,6 +41,7 @@
   height: 24px;
   object-fit: contain;
   flex-shrink: 0;
+  filter: brightness(0) saturate(100%) invert(47%) sepia(79%) saturate(1352%) hue-rotate(222deg) brightness(99%) contrast(89%);
 }
 
 .footer-links {
