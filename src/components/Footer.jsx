@@ -23,6 +23,13 @@ function Footer() {
   return (
     <footer className="footer">
       <div className="footer-content">
+        <div className="footer-section footer-about">
+          <h3 className="footer-title">Tiện Tích Miễn Phí</h3>
+          <p className="footer-description">
+            Bộ công cụ đa dạng và mạnh mẽ cho mọi nhu cầu của bạn
+          </p>
+        </div>
+
         <div className="footer-section">
           <h3 className="footer-title">Liên kết</h3>
           <ul className="footer-links">
@@ -82,13 +89,6 @@ function Footer() {
             </button>
           </div>
         </div>
-
-        <div className="footer-section footer-about">
-          <h3 className="footer-title">Tiện Tích Miễn Phí</h3>
-          <p className="footer-description">
-            Bộ công cụ đa dạng và mạnh mẽ cho mọi nhu cầu của bạn
-          </p>
-        </div>
       </div>
 
       <div className="footer-bottom">
@@ -101,4 +101,3 @@ function Footer() {
 }
 
 export default Footer
-
