@@ -2,7 +2,7 @@
   position: relative;
   z-index: 1;
   min-height: calc(100vh - 200px);
-  padding-top: 20px;
+  padding-top: 100px; /* Space for fixed navbar */
 }
 
 /* Utility Header */
@@ -10,12 +10,10 @@
   background: var(--bg-secondary);
   border-bottom: 1px solid var(--border-color);
   padding: 24px 32px;
-  margin: 0 0 40px 0;
+  margin: 0 auto 40px;
   box-shadow: 0 2px 8px var(--shadow);
   transition: background-color 0.3s ease, border-color 0.3s ease;
   max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
   border-radius: 0 0 16px 16px;
   display: flex;
   flex-direction: column;
@@ -112,6 +110,7 @@
   .utility-header-content {
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap: 16px;
   }
 
@@ -123,6 +122,11 @@
 
   .utility-title {
     font-size: 2rem;
+    text-align: center;
+  }
+
+  .utility-description {
+    text-align: center;
   }
 
   .utility-content {
@@ -145,6 +149,11 @@
     margin-bottom: 16px;
   }
 
+  .utility-header-content {
+    align-items: center;
+    justify-content: center;
+  }
+
   .utility-header-icon {
     width: 56px;
     height: 56px;
@@ -153,10 +162,12 @@
 
   .utility-title {
     font-size: 1.75rem;
+    text-align: center;
   }
 
   .utility-description {
     font-size: 0.9rem;
+    text-align: center;
   }
 
   .utility-content {

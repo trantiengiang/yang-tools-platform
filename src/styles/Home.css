@@ -1,6 +1,7 @@
 .home-page {
   position: relative;
   z-index: 1;
+  padding-top: 80px; /* Space for fixed navbar */
 }
 
 /* Hero Section */

@@ -2,7 +2,7 @@
   position: relative;
   z-index: 1;
   min-height: calc(100vh - 200px);
-  padding-top: 40px;
+  padding-top: 120px; /* Space for fixed navbar */
 }
 
 .support-page-header {
@@ -39,9 +39,19 @@
 }
 
 /* Responsive */
+@media (max-width: 1024px) {
+  .support-page-header {
+    padding: 0 24px;
+  }
+
+  .support-page-content {
+    padding: 0 24px 60px;
+  }
+}
+
 @media (max-width: 768px) {
   .support-page {
-    padding-top: 30px;
+    padding-top: 100px;
   }
 
   .support-page-header {
@@ -64,7 +74,7 @@
 
 @media (max-width: 480px) {
   .support-page {
-    padding-top: 20px;
+    padding-top: 100px;
   }
 
   .support-page-header {

@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
+import { useTheme } from '../contexts/ThemeContext'
 import { groupedUtilities } from '../utilities'
 import '../styles/Navbar.css'
 
 function Navbar() {
   const navigate = useNavigate()
   const location = useLocation()
+  const { theme, toggleTheme } = useTheme()
   const grouped = groupedUtilities()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
@@ -66,6 +68,13 @@ function Navbar() {
             <span className="navbar-item-icon">💝</span>
             <span className="navbar-item-text">Ủng hộ</span>
           </button>
+          <button
+            className="navbar-theme-toggle"
+            onClick={toggleTheme}
+            title={theme === 'light' ? 'Chuyển sang chế độ tối' : 'Chuyển sang chế độ sáng'}
+          >
+            {theme === 'light' ? '🌙' : '☀️'}
+          </button>
         </div>
 
         {/* Mobile Menu Toggle */}
@@ -108,6 +117,15 @@ function Navbar() {
           >
             <span className="mobile-menu-icon">💝</span>
             <span className="mobile-menu-text">Ủng hộ</span>
+            <span className="mobile-menu-count"></span>
+          </button>
+          <button
+            className="mobile-menu-theme-toggle"
+            onClick={toggleTheme}
+            title={theme === 'light' ? 'Chuyển sang chế độ tối' : 'Chuyển sang chế độ sáng'}
+          >
+            <span className="mobile-menu-icon">{theme === 'light' ? '🌙' : '☀️'}</span>
+            <span className="mobile-menu-text">{theme === 'light' ? 'Chế độ tối' : 'Chế độ sáng'}</span>
             <span className="mobile-menu-count"></span>
           </button>
         </div>
