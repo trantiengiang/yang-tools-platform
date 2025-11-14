@@ -24,7 +24,14 @@ function Footer() {
     <footer className="footer">
       <div className="footer-content">
         <div className="footer-section footer-about">
-          <h3 className="footer-title">Tiện Tích Miễn Phí</h3>
+          <h3 className="footer-title">
+            <img 
+              src="https://i.postimg.cc/HWZd1Qt3/customer-support-1.png" 
+              alt="Yang Tools Platform" 
+              className="footer-icon"
+            />
+            Yang Tools Platform
+          </h3>
           <p className="footer-description">
             Bộ công cụ đa dạng và mạnh mẽ cho mọi nhu cầu của bạn
           </p>
@@ -93,7 +100,7 @@ function Footer() {
 
       <div className="footer-bottom">
         <p className="footer-copyright">
-          © 2025 Tiện Tích Miễn Phí. All rights reserved.
+          © 2025 Yang Tools Platform. All rights reserved.
         </p>
       </div>
     </footer>

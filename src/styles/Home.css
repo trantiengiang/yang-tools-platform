@@ -29,6 +29,18 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
   line-height: 1.2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.hero-icon {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  flex-shrink: 0;
+  filter: brightness(0) saturate(100%) invert(47%) sepia(79%) saturate(1352%) hue-rotate(222deg) brightness(99%) contrast(89%);
 }
 
 .hero-subtitle {
@@ -206,6 +218,11 @@
     font-size: 2.25rem;
   }
 
+  .hero-icon {
+    width: 36px;
+    height: 36px;
+  }
+
   .hero-subtitle {
     font-size: 1.1rem;
   }
@@ -254,6 +271,11 @@
 
   .hero-title {
     font-size: 1.875rem;
+  }
+
+  .hero-icon {
+    width: 32px;
+    height: 32px;
   }
 
   .hero-subtitle {

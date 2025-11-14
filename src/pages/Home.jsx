@@ -63,7 +63,14 @@ function Home() {
       {/* Hero Section */}
       <div className="hero-section">
         <div className="hero-content">
-          <h1 className="hero-title">Bộ công cụ đa dạng và mạnh mẽ</h1>
+          <h1 className="hero-title">
+            <img 
+              src="https://i.postimg.cc/HWZd1Qt3/customer-support-1.png" 
+              alt="Yang Tools Platform" 
+              className="hero-icon"
+            />
+            Yang Tools Platform
+          </h1>
           <p className="hero-subtitle">Hơn 50+ tiện ích miễn phí cho mọi nhu cầu của bạn</p>
         </div>
       </div>
