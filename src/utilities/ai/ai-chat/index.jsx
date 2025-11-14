@@ -5,12 +5,60 @@ function AiChat() {
   const [messages, setMessages] = useState([])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
-  const [apiKey, setApiKey] = useState('')
-  const [apiUrl, setApiUrl] = useState('https://api.openai.com/v1/chat/completions')
+  const [provider, setProvider] = useState('openai')
+  
+  // Lấy API keys từ .env
+  const groqKey = import.meta.env.VITE_GROQ_API_KEY || ''
+  const openaiKey = import.meta.env.VITE_OPENAI_API_KEY || ''
+  const geminiKey = import.meta.env.VITE_GEMINI_API_KEY || ''
+
+  // Kiểm tra API key có sẵn
+  const hasApiKey = () => {
+    switch (provider) {
+      case 'openai':
+        return !!openaiKey
+      case 'groq':
+        return !!groqKey
+      case 'gemini':
+        return !!geminiKey
+      default:
+        return false
+    }
+  }
+
+  const getApiConfig = () => {
+    switch (provider) {
+      case 'groq':
+        return {
+          url: 'https://api.groq.com/openai/v1/chat/completions',
+          model: 'llama-3.3-70b-versatile', // Updated model
+          key: groqKey
+        }
+      case 'gemini':
+        return {
+          url: `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiKey}`,
+          model: 'gemini-1.5-flash', // Updated model
+          key: geminiKey
+        }
+      case 'openai':
+      default:
+        return {
+          url: 'https://api.openai.com/v1/chat/completions',
+          model: 'gpt-3.5-turbo',
+          key: openaiKey
+        }
+    }
+  }
 
   const sendMessage = async () => {
-    if (!input.trim() || !apiKey) {
-      alert('Vui lòng nhập message và API key')
+    if (!input.trim()) {
+      alert('Vui lòng nhập tin nhắn')
+      return
+    }
+
+    const config = getApiConfig()
+    if (!config.key) {
+      alert(`API key cho ${provider === 'openai' ? 'OpenAI' : provider === 'groq' ? 'Groq' : 'Gemini'} chưa được cấu hình trong file .env`)
       return
     }
 
@@ -20,110 +68,79 @@ function AiChat() {
     setLoading(true)
 
     try {
-      // Tạo AbortController để có thể timeout
       const controller = new AbortController()
-      const timeoutId = setTimeout(() => controller.abort(), 60000) // 60 seconds timeout
+      const timeoutId = setTimeout(() => controller.abort(), 60000)
 
       let response
-      try {
-        response = await fetch(apiUrl, {
+      let requestBody
+
+      if (provider === 'gemini') {
+        // Gemini API format - include conversation history
+        const conversationHistory = messages.map(msg => ({
+          role: msg.role === 'user' ? 'user' : 'model',
+          parts: [{ text: msg.content }]
+        }))
+        
+        requestBody = {
+          contents: [
+            ...conversationHistory,
+            {
+              role: 'user',
+              parts: [{ text: input }]
+            }
+          ]
+        }
+        response = await fetch(config.url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(requestBody),
+          signal: controller.signal
+        })
+      } else {
+        // OpenAI/Groq format
+        requestBody = {
+          model: config.model,
+          messages: [...messages, userMessage],
+          temperature: 0.7
+        }
+        response = await fetch(config.url, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${apiKey}`
+            'Authorization': `Bearer ${config.key}`
           },
-          body: JSON.stringify({
-            model: 'gpt-3.5-turbo',
-            messages: [...messages, userMessage],
-            temperature: 0.7
-          }),
+          body: JSON.stringify(requestBody),
           signal: controller.signal
         })
-        clearTimeout(timeoutId)
-      } catch (fetchError) {
-        clearTimeout(timeoutId)
-        if (fetchError.name === 'AbortError') {
-          throw new Error('Kết nối bị timeout. Vui lòng thử lại sau hoặc kiểm tra kết nối internet/VPN của bạn.')
-        } else if (fetchError.message.includes('Failed to fetch') || fetchError.message.includes('NetworkError')) {
-          throw new Error('Không thể kết nối đến server. Vui lòng kiểm tra kết nối internet hoặc VPN của bạn.')
-        } else {
-          throw fetchError
-        }
       }
 
-      // Đọc response body (chỉ đọc một lần)
-      let responseText
-      try {
-        responseText = await response.text()
-        if (!responseText) {
-          throw new Error('Response trống từ server')
-        }
-      } catch (readError) {
-        throw new Error('Không thể đọc response từ server. Vui lòng kiểm tra kết nối.')
-      }
+      clearTimeout(timeoutId)
 
-      // Kiểm tra response status
       if (!response.ok) {
-        let errorMessage = `Lỗi ${response.status}: ${response.statusText}`
-        try {
-          const errorData = JSON.parse(responseText)
-          if (errorData.error && errorData.error.message) {
-            errorMessage = errorData.error.message
-          } else if (errorData.message) {
-            errorMessage = errorData.message
-          }
-        } catch (e) {
-          // Nếu không parse được JSON, sử dụng text response
-          if (responseText) {
-            errorMessage += ` - ${responseText.substring(0, 200)}`
-          }
-        }
-        throw new Error(errorMessage)
+        const errorData = await response.json().catch(() => ({ error: { message: response.statusText } }))
+        throw new Error(errorData.error?.message || `Lỗi ${response.status}`)
       }
 
-      // Parse JSON response
-      let data
-      try {
-        data = JSON.parse(responseText)
-      } catch (parseError) {
-        throw new Error('Lỗi serialization: Server trả về dữ liệu không hợp lệ. Vui lòng kiểm tra API URL và format của response.')
-      }
-      
-      // Kiểm tra lỗi từ API response
-      if (data.error) {
-        const errorMsg = data.error.message || data.error.code || 'Lỗi không xác định từ API'
-        throw new Error(errorMsg)
+      const data = await response.json()
+
+      let aiResponse = ''
+      if (provider === 'gemini') {
+        aiResponse = data.candidates?.[0]?.content?.parts?.[0]?.text || 'Không có phản hồi'
+      } else {
+        aiResponse = data.choices?.[0]?.message?.content || 'Không có phản hồi'
       }
 
-      // Kiểm tra cấu trúc response hợp lệ
-      if (!data.choices || !Array.isArray(data.choices) || data.choices.length === 0) {
-        throw new Error('Response không đúng định dạng: thiếu choices array')
-      }
-
-      if (!data.choices[0].message || !data.choices[0].message.content) {
-        throw new Error('Response không đúng định dạng: thiếu message content')
-      }
-
-      // Thành công - thêm message vào chat
       setMessages(prev => [...prev, { 
         role: 'assistant', 
-        content: data.choices[0].message.content 
+        content: aiResponse 
       }])
     } catch (error) {
-      // Xử lý các loại lỗi khác nhau
       let errorMessage = error.message || 'Lỗi không xác định'
-      
-      // Kiểm tra các lỗi network phổ biến
-      if (errorMessage.includes('Failed to fetch') || 
-          errorMessage.includes('NetworkError') ||
-          errorMessage.includes('Network request failed')) {
-        errorMessage = 'Kết nối thất bại. Nếu vấn đề vẫn tiếp tục, vui lòng kiểm tra kết nối internet hoặc VPN của bạn.'
-      } else if (errorMessage.includes('CORS') || errorMessage.includes('CORS policy')) {
-        errorMessage = 'Lỗi CORS: API server không cho phép truy cập từ trình duyệt này. Vui lòng kiểm tra cấu hình CORS của API server.'
-      } else if (errorMessage.includes('serialization') || errorMessage.includes('JSON')) {
-        errorMessage = 'Lỗi serialization: Dữ liệu từ server không hợp lệ. Vui lòng kiểm tra API URL và đảm bảo server trả về JSON hợp lệ.'
+      if (error.name === 'AbortError') {
+        errorMessage = 'Kết nối bị timeout. Vui lòng thử lại.'
       }
-
       setMessages(prev => [...prev, { 
         role: 'assistant', 
         content: `❌ ${errorMessage}` 
@@ -142,24 +159,25 @@ function AiChat() {
       <h3>Chat AI</h3>
       <div className="utility-form">
         <div className="input-group">
-          <label>API URL:</label>
-          <input
-            type="text"
-            value={apiUrl}
-            onChange={(e) => setApiUrl(e.target.value)}
-            placeholder="https://api.openai.com/v1/chat/completions"
-          />
+          <label>Provider:</label>
+          <select 
+            value={provider} 
+            onChange={(e) => setProvider(e.target.value)}
+            style={{ padding: '10px', borderRadius: '8px', border: '1px solid var(--border-color)' }}
+          >
+            <option value="openai">OpenAI GPT</option>
+            <option value="groq">Groq</option>
+            <option value="gemini">Google Gemini</option>
+          </select>
         </div>
 
-        <div className="input-group">
-          <label>API Key:</label>
-          <input
-            type="password"
-            value={apiKey}
-            onChange={(e) => setApiKey(e.target.value)}
-            placeholder="Nhập API key của bạn"
-          />
-        </div>
+        {!hasApiKey() && (
+          <div className="input-group" style={{ padding: '12px', background: '#fff3cd', borderRadius: '8px', border: '1px solid #ffc107' }}>
+            <p style={{ margin: 0, color: '#856404', fontSize: '0.9rem' }}>
+              ⚠️ API key cho {provider === 'openai' ? 'OpenAI' : provider === 'groq' ? 'Groq' : 'Gemini'} chưa được cấu hình trong file .env
+            </p>
+          </div>
+        )}
 
         <div className="chat-messages">
           {messages.length === 0 ? (
@@ -196,4 +214,3 @@ function AiChat() {
 }
 
 export default AiChat
-

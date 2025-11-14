@@ -12,9 +12,9 @@ export const useTheme = () => {
 
 export const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState(() => {
-    // Lấy theme từ localStorage hoặc mặc định là 'light'
+    // Lấy theme từ localStorage hoặc mặc định là 'dark'
     const savedTheme = localStorage.getItem('theme')
-    return savedTheme || 'light'
+    return savedTheme || 'dark'
   })
 
   useEffect(() => {

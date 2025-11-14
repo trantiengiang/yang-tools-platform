@@ -42,7 +42,7 @@ function Footer() {
               </button>
             </li>
             <li>
-              <button onClick={() => handleLinkClick('/')} className="footer-link">
+              <button onClick={() => handleLinkClick('/support')} className="footer-link">
                 Ủng hộ
               </button>
             </li>

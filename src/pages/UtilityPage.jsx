@@ -1,26 +1,17 @@
 import React from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { getUtility, getCategoryId } from '../utilities'
-import { useTheme } from '../contexts/ThemeContext'
 import '../styles/UtilityPage.css'
 
 function UtilityPage() {
   const { id } = useParams()
   const navigate = useNavigate()
-  const { theme, toggleTheme } = useTheme()
   const utility = getUtility(id)
   const categoryId = getCategoryId(id)
 
   if (!utility) {
     return (
       <div className="utility-page">
-        <button 
-          className="theme-toggle"
-          onClick={toggleTheme}
-          title={theme === 'light' ? 'Chuyển sang chế độ tối' : 'Chuyển sang chế độ sáng'}
-        >
-          {theme === 'light' ? '🌙' : '☀️'}
-        </button>
         <div className="utility-content">
           <button className="back-btn" onClick={() => navigate('/')}>
             ← Về trang chủ
@@ -44,14 +35,6 @@ function UtilityPage() {
 
   return (
     <div className="utility-page">
-      <button 
-        className="theme-toggle"
-        onClick={toggleTheme}
-        title={theme === 'light' ? 'Chuyển sang chế độ tối' : 'Chuyển sang chế độ sáng'}
-      >
-        {theme === 'light' ? '🌙' : '☀️'}
-      </button>
-
       <div className="utility-header">
         <button className="back-btn" onClick={handleBack}>
           ← Quay lại
